@@ -125,8 +125,8 @@ map("n", "<leader>uT", function() if vim.b.ts_highlight then vim.treesitter.stop
 map("n", "<leader>ub", function() LazyVim.toggle("background", false, {"light", "dark"}) end, { desc = "Toggle Background" })
 
 -- lazygit
-map("n", "<leader>gg", function() LazyVim.lazygit( { cwd = LazyVim.root.git() }) end, { desc = "Lazygit (root dir)" })
-map("n", "<leader>gG", function() LazyVim.lazygit() end, { desc = "Lazygit (cwd)" })
+map("n", "<leader>gg", function() LazyVim.lazygit() end, { desc = "Lazygit (cwd)" })
+map("n", "<leader>gG", function() LazyVim.lazygit( { cwd = LazyVim.root.git() }) end, { desc = "Lazygit (root dir)" })
 
 map("n", "<leader>gf", function()
   local git_path = vim.api.nvim_buf_get_name(0)
@@ -143,11 +143,12 @@ map("n", "<leader>ui", vim.show_pos, { desc = "Inspect Pos" })
 map("n", "<leader>L", function() LazyVim.news.changelog() end, { desc = "LazyVim Changelog" })
 
 -- floating terminal
-local lazyterm = function() LazyVim.terminal(nil, { cwd = LazyVim.root() }) end
-map("n", "<leader>ft", lazyterm, { desc = "Terminal (root dir)" })
-map("n", "<leader>fT", function() LazyVim.terminal() end, { desc = "Terminal (cwd)" })
-map("n", "<c-/>", lazyterm, { desc = "Terminal (root dir)" })
-map("n", "<c-_>", lazyterm, { desc = "which_key_ignore" })
+local lazyterm_root = function() LazyVim.terminal(nil, { cwd = LazyVim.root.git() }) end
+local lazyterm_cwd = function() LazyVim.terminal() end
+map("n", "<leader>ft", lazyterm_cwd, { desc = "Terminal (cwd)" })
+map("n", "<leader>fT", lazyterm_root, { desc = "Terminal (root dir)" })
+map("n", "<c-/>", lazyterm_cwd, { desc = "Terminal (cwd)" })
+map("n", "<c-_>", lazyterm_cwd, { desc = "which_key_ignore" })
 
 -- Terminal Mappings
 map("t", "<esc><esc>", "<c-\\><c-n>", { desc = "Enter Normal Mode" })
