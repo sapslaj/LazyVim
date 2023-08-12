@@ -143,8 +143,9 @@ map("n", "<leader>ui", vim.show_pos, { desc = "Inspect Pos" })
 map("n", "<leader>L", function() LazyVim.news.changelog() end, { desc = "LazyVim Changelog" })
 
 -- floating terminal
-local lazyterm_root = function() LazyVim.terminal(nil, { cwd = LazyVim.root.git() }) end
-local lazyterm_cwd = function() LazyVim.terminal() end
+local lazyterm_windowopts = { border = "single" }
+local lazyterm_root = function() LazyVim.terminal(nil, vim.tbl_deep_extend("force", lazyterm_windowopts, { cwd = LazyVim.root.git() })) end
+local lazyterm_cwd = function() LazyVim.terminal(nil, lazyterm_windowopts) end
 map("n", "<leader>ft", lazyterm_cwd, { desc = "Terminal (cwd)" })
 map("n", "<leader>fT", lazyterm_root, { desc = "Terminal (root dir)" })
 map("n", "<c-/>", lazyterm_cwd, { desc = "Terminal (cwd)" })
