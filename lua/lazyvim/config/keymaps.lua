@@ -135,8 +135,9 @@ end
 map("n", "<leader>L", Util.changelog, {desc = "LazyVim Changelog"})
 
 -- floating terminal
-local lazyterm_root = function() Util.float_term(nil, { cwd = Util.get_root() }) end
-local lazyterm_cwd = function() Util.float_term() end
+local lazyterm_windowopts = { border = "single" }
+local lazyterm_root = function() Util.float_term(nil, vim.tbl_deep_extend("force", lazyterm_windowopts, { cwd = Util.get_root() })) end
+local lazyterm_cwd = function() Util.float_term(nil, lazyterm_windowopts) end
 map("n", "<leader>ft", lazyterm_cwd, { desc = "Terminal (cwd)" })
 map("n", "<leader>fT", lazyterm_root, { desc = "Terminal (root dir)" })
 map("n", "<c-/>", lazyterm_cwd, { desc = "Terminal (cwd)" })
